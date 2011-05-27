@@ -1,0 +1,4 @@
+EXTRA_APPS = (
+    'south',
+    'debug_toolbar',
+)
