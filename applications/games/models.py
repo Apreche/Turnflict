@@ -1,4 +1,5 @@
 from django.db import models
+from dcouch.models import CouchField
 
 
 class Game(models.Model):
@@ -11,6 +12,7 @@ class Game(models.Model):
     start_time = models.DateTimeField(auto_now_add=True)
     last_active = models.DateTimeField(auto_now=True)
     turn = models.IntegerField(default=0)
+    state = CouchField(db_name='turnflict')
 
     STATUSES = {
         'Pregame': 0,
@@ -27,5 +29,5 @@ class Game(models.Model):
             t = (self.name, self.player_two.username, self.player_one.username)
             return u"%s - %s vs. %s" % t
         else:
-            t = (self.name, self.player_one.username)
+            t = (self.name, self.player_one.user.username)
             return u"%s - %s waiting for opponent"
