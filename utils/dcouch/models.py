@@ -2,6 +2,7 @@ from django.db import models
 from django.core.exceptions import ImproperlyConfigured
 
 from couchdb import Server
+from couchdb.http import ResourceConflict
 from couchdb.mapping import Document
 
 from dcouch import settings
@@ -23,7 +24,6 @@ class CouchField(models.fields.CharField):
             return self.id or u''
         mapping.__unicode__ = unicode_override
         self.mapping = mapping
-
         self.db_name = db_name
         if db_name is None:
             raise ImproperlyConfigured("CouchField must have a db_name")
@@ -40,13 +40,14 @@ class CouchField(models.fields.CharField):
                 return value
             else:
                 return obj
-        obj = self.mapping.load(self.db, value)
-        if not obj:
-            obj = self.mapping()
-            if value:
+        if value == '':
+            return self.mapping()
+        else:
+            obj = self.mapping.load(self.db, value)
+            if obj is None:
+                obj = self.mapping()
                 obj.id = value
-        print "C %s" % value
-        return obj
+            return obj
 
     def get_prep_value(self, value):
         return getattr(value, 'id', '')

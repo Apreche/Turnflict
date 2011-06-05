@@ -12,13 +12,9 @@ class Migration(SchemaMigration):
         db.create_table('games_game', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('couch_id', self.gf('django.db.models.fields.CharField')(unique=True, max_length=255)),
-            ('player_one', self.gf('django.db.models.fields.related.ForeignKey')(related_name='player_one_game', to=orm['players.Player'])),
-            ('player_two', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='player_two_game', null=True, to=orm['players.Player'])),
-            ('start_time', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('last_active', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-            ('turn', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('status', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('state', self.gf('dcouch.models.CouchField')(default='', max_length=32, db_name='turnflict', blank=True)),
+            ('player_one', self.gf('django.db.models.fields.related.ForeignKey')(related_name='player_one_game', to=orm['auth.User'])),
+            ('player_two', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='player_two_game', null=True, to=orm['auth.User'])),
         ))
         db.send_create_signal('games', ['Game'])
 
@@ -68,23 +64,11 @@ class Migration(SchemaMigration):
         },
         'games.game': {
             'Meta': {'object_name': 'Game'},
-            'couch_id': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_active': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'player_one': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'player_one_game'", 'to': "orm['players.Player']"}),
-            'player_two': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'player_two_game'", 'null': 'True', 'to': "orm['players.Player']"}),
-            'start_time': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'status': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'turn': ('django.db.models.fields.IntegerField', [], {'default': '0'})
-        },
-        'players.player': {
-            'Meta': {'object_name': 'Player'},
-            'games_played': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'losses': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'}),
-            'wins': ('django.db.models.fields.IntegerField', [], {'default': '0'})
+            'player_one': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'player_one_game'", 'to': "orm['auth.User']"}),
+            'player_two': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'player_two_game'", 'null': 'True', 'to': "orm['auth.User']"}),
+            'state': ('dcouch.models.CouchField', [], {'default': "''", 'max_length': '32', 'db_name': "'turnflict'", 'blank': 'True'})
         }
     }
 
