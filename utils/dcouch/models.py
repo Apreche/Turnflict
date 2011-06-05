@@ -12,12 +12,18 @@ class CouchField(models.fields.CharField):
 
     __metaclass__ = models.SubfieldBase
 
-    def __init__(self, db_name=None, *args, **kwargs):
+    def __init__(self, db_name=None, mapping=Document, *args, **kwargs):
         kwargs.setdefault('max_length', 32)
         kwargs.setdefault('blank', True)
         kwargs.setdefault('null', False)
         kwargs.setdefault('default', '')
         server = Server(settings.COUCHDB_SERVER)
+
+        def unicode_override(self):
+            return self.id or u''
+        mapping.__unicode__ = unicode_override
+        self.mapping = mapping
+
         self.db_name = db_name
         if db_name is None:
             raise ImproperlyConfigured("CouchField must have a db_name")
@@ -28,9 +34,19 @@ class CouchField(models.fields.CharField):
         super(CouchField, self).__init__(*args, **kwargs)
 
     def to_python(self, value):
-        if isinstance(value, Document):
-            return value
-        return Document.load(self.db, value)
+        if isinstance(value, self.mapping):
+            obj = self.mapping.load(self.db, value.id)
+            if obj is None:
+                return value
+            else:
+                return obj
+        obj = self.mapping.load(self.db, value)
+        if not obj:
+            obj = self.mapping()
+            if value:
+                obj.id = value
+        print "C %s" % value
+        return obj
 
     def get_prep_value(self, value):
         return getattr(value, 'id', '')
@@ -41,6 +57,10 @@ class CouchField(models.fields.CharField):
             attr.store(self.db)
         return attr
 
+    def value_to_string(self, obj):
+        value = self._get_val_from_obj(obj)
+        return self.get_prep_value(value)
+
 try:
     from south.modelsinspector import add_introspection_rules
     rules = [
@@ -49,6 +69,7 @@ try:
             [],
             {
                 "db_name": ["db_name", {"default": None}],
+                "mapping": ["mapping", {"default": Document}],
             },
         ),
     ]

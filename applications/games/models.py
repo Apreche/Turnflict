@@ -30,4 +30,4 @@ class Game(models.Model):
             return u"%s - %s vs. %s" % t
         else:
             t = (self.name, self.player_one.user.username)
-            return u"%s - %s waiting for opponent"
+            return u"%s - %s waiting for opponent" % t
