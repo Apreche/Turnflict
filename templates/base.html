@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}
+    <meta charset="utf-8">
+    <title>{% block title %}Turnflict{% endblock title %}</title>
+    {% block css %}
+    {% endblock css %}
+    {% block js %}
+    {% endblock js %}
+    {% endblock head %}
+  </head>
+  <body>
+      {% block body %}
+
+      {% block login %}
+      <ul>
+      {% if user.is_authenticated %}
+          <li><a href="/accounts/logout/">Logout</a></li>
+      {% else %}
+          <li><a href="/accounts/login/">Login</a></li>
+          <li><a href="/accounts/register/">Register</a></li>
+      {% endif %}
+      </ul>
+      {% endblock login %}
+      {% block content %}
+      {% endblock content %}
+
+      {% endblock body %}
+  </body>
+</html>

@@ -110,6 +110,32 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.contrib.messages.context_processors.messages",
+    #"django.core.context_processors.request",
+)
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    #'socialregistration.auth.OpenIDAuth',
+)
+
+AUTH_PROFILE_MODULE = 'players.Player'
+
+ACCOUNT_ACTIVATION_DAYS = 7
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'server@frontrowcrew.com'
+#EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 587
+EMAIL_SUBJECT_PREFIX = '[Turnflict] '
+LOGIN_REDIRECT_URL = 'http://localhost:8000/accounts/login/'
+
 try:
     from local_middleware import EXTRA_MIDDLEWARE
     MIDDLEWARE_CLASSES += EXTRA_MIDDLEWARE
@@ -135,15 +161,17 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.flatpages',
+    'registration',
+    #'socialregistration',
     'django_extensions',
     'memcache_status',
     'johnny',
-
+    
+    'homepage',
     'players',
     'games',
 )
 
-AUTH_PROFILE_MODULE = 'players.Player'
 
 try:
     from local_apps import EXTRA_APPS
