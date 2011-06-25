@@ -55,7 +55,7 @@ $(document).ready(function()
     var aspect_ratio = 16/9;
     var canvas = $("#gamefield")[0];
 
-    var url = "/static/data/testdata.json";
+    var url = $("#couchurl").html();
     $.getJSON(url, function(data) {
         var game = data.game;
         var theme = {

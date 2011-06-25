@@ -9,3 +9,7 @@ canvas {
 img#themesprite {
     display: none;
 }
+
+#data {
+    display: none;
+}

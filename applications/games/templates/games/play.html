@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <div id="canvascontainer" class="eleven columns">
+            <canvas id="gamefield"></canvas>
+        </div>
+        <div class="five columns">
+            <ul class="tabs">
+                <li><a class="active" href="#gamelog">Log</a></li>
+                <li><a href="#info">Info</a></li>
+                <li><a href="#menu">Menu</a></li>
+            </ul>
+            <ul class="tabs-content">
+                <li class="active" id="gamelogTab">
+                    <ul>
+                        <li>3,2 move to 5,6</li>
+                        <li>3,4 shoot 3,5</li>
+                    </ul>
+                </li>
+                <li id="infoTab">
+                <p>5 health</p>
+                </li>
+                <li id="menuTab">
+                    Forfeit
+                </li>
+            </ul>
+        </div>
+    </div> <! -- container -->
+    <div id="log">
+    </div> <!-- log -->
+    <div id="couchurl">/game/state/{{game.id}}</div>
+    <img id="themesprite" src="{{STATIC_URL}}img/LandUnits.gif" />
+{% endblock content %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="{{STATIC_URL}}js/turnflict.js"></script>
+{% endblock js %}

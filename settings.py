@@ -27,6 +27,9 @@ DATABASES = {
     }
 }
 
+COUCHDB_HOST = 'http://localhost:5984/'
+COUCHDB_NAME = 'turnflict'
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -135,7 +138,7 @@ EMAIL_HOST_USER = 'server@frontrowcrew.com'
 #EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 EMAIL_SUBJECT_PREFIX = '[Turnflict] '
-LOGIN_REDIRECT_URL = 'http://localhost:8000/accounts/login/'
+LOGIN_REDIRECT_URL = 'http://localhost:8000/players/home'
 
 try:
     from local_middleware import EXTRA_MIDDLEWARE
@@ -150,6 +153,7 @@ CACHES = {
 }
 
 ROOT_URLCONF = 'Turnflict.urls'
+APPEND_SLASH = False
 
 TEMPLATE_DIRS = (
     os.path.join(os.path.dirname(__file__), 'templates'),
@@ -175,7 +179,6 @@ INSTALLED_APPS = (
     'players',
     'games',
 )
-
 
 try:
     from local_apps import EXTRA_APPS

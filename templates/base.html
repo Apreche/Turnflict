@@ -1,31 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    {% block head %}
-    <meta charset="utf-8">
-    <title>{% block title %}Turnflict{% endblock title %}</title>
+<!doctype html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+    <title>{% block title %}Turnflict{% endblock %}</title>
+    <meta http-equiv="Pramga" content="no-cache">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+	
     {% block css %}
-    {% endblock css %}
+    <link rel="stylesheet" href="{{STATIC_URL}}css/base.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/skeleton.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/layout.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/turnflict.css">
+    {% endblock %}
+	
+    <link rel="shortcut icon" href="{{STATIC_URL}}img/favicon.ico">
+    <link rel="apple-touch-icon" href="{{STATIC_URL}}img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{STATIC_URL}}img/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="{{STATIC_URL}}img/apple-touch-icon-114x114.png" />
+	
+</head>
+<body>
+    {% block body %}
+
+    {% block header %}
+    <div class="container">
+        <div class="sixteen columns">
+            <h1>Turnflict</h1>
+        </div>
+    {% endblock header %}
+    <div class="sixteen columns">
+    {% block content %}
+    {% endblock %}
+    </div>
+    </div> <!-- container -->
     {% block js %}
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
+    <script>window.jQuery || document.write("<script src='{{STATIC_URL}}js/jquery-1.5.1.min.js'>\x3C/script>")</script>
+    <script src="{{STATIC_URL}}js/app.js"></script>
     {% endblock js %}
-    {% endblock head %}
-  </head>
-  <body>
-      {% block body %}
-
-      {% block login %}
-      <ul>
-      {% if user.is_authenticated %}
-          <li><a href="/accounts/logout/">Logout</a></li>
-      {% else %}
-          <li><a href="/accounts/login/">Login</a></li>
-          <li><a href="/accounts/register/">Register</a></li>
-      {% endif %}
-      </ul>
-      {% endblock login %}
-      {% block content %}
-      {% endblock content %}
-
-      {% endblock body %}
-  </body>
+    {% endblock body %}
+</body>
 </html>
