@@ -1,3 +1,5 @@
+//$("#log").prepend("<p>(" + x + "," + y + ")</p>");
+var original_game;
 var game;
 var zoom;
 var aspect_ratio;
@@ -136,7 +138,6 @@ function process_click(coordinates)
             });
         }
     }
-    $("#log").prepend("<p>" + coordinates.x + "," + coordinates.y + "</p>");
 }
 
 $(document).ready(function()
@@ -148,7 +149,8 @@ $(document).ready(function()
 
     var url = $("#couchurl").html();
     $.getJSON(url, function(data) {
-        game = data.game;
+        original_game = $.extend(true, {}, data.game);
+        game = $.extend(true, {}, data.game);
         var theme = {
             "image": $("#themesprite")[0],
             "resolution": 20
@@ -163,5 +165,10 @@ $(document).ready(function()
             draw(canvas, game, theme, zoom, aspect_ratio);
         },
         false);
+        $("#reset").click(function(){
+            commands = {'commands': []};
+            game = $.extend(true, {}, original_game);
+            draw(canvas, game, theme, zoom, aspect_ratio);
+        });
     });
 });
