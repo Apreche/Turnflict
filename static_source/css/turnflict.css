@@ -1,0 +1,11 @@
+.nav li {
+    display: inline;
+}
+canvas {
+    border: 1px solid black;
+    margin-bottom: 20px;
+}
+
+img#themesprite {
+    display: none;
+}

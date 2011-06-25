@@ -1,0 +1,7 @@
+{"game": {
+        "units": [
+            {"id": 1, "team": 0, "type": 0, "x": 0, "y": 0, "movement": 3},
+            {"id": 2, "team": 0, "type": 1, "x": 3, "y": 4, "movement": 3}
+        ]
+    }
+}

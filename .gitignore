@@ -3,3 +3,4 @@
 local_settings.py
 local_apps.py
 local_middleware.py
+static/*

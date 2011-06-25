@@ -10,7 +10,6 @@ urlpatterns = patterns('',
     # url(r'^$', 'Django_Project_Template.views.home', name='home'),
     # url(r'^Django_Project_Template/', include('Django_Project_Template.foo.urls')),
 
-    url(r'^$', include('homepage.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -20,6 +19,7 @@ urlpatterns = patterns('',
 
     #url(r'^social/', include('socialregistration.urls')),
     url(r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^$', include('homepage.urls')),
 )
 
 if settings.DEBUG:

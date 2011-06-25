@@ -1,0 +1,72 @@
+<!doctype html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<meta charset="utf-8" />
+	<title>Turnflict</title>
+    <meta http-equiv="Pramga" content="no-cache">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+	
+    <link rel="stylesheet" href="{{STATIC_URL}}css/base.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/skeleton.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/layout.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/turnflict.css">
+	
+    <link rel="shortcut icon" href="{{STATIC_URL}}img/favicon.ico">
+    <link rel="apple-touch-icon" href="{{STATIC_URL}}img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{STATIC_URL}}img/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="{{STATIC_URL}}img/apple-touch-icon-114x114.png" />
+	
+</head>
+<body>
+
+    <div class="container">
+        <div class="sixteen columns">
+            <h1>Turnflict</h1>
+        </div>
+    </div> <!-- container -->
+    <div class="container">
+        <div id="canvascontainer" class="eleven columns">
+            <canvas id="gamefield"></canvas>
+        </div>
+        <div class="five columns">
+            <ul class="tabs">
+                <li><a class="active" href="#gamelog">Log</a></li>
+                <li><a href="#info">Info</a></li>
+                <li><a href="#menu">Menu</a></li>
+            </ul>
+            <ul class="tabs-content">
+                <li class="active" id="gamelogTab">
+                    <ul>
+                        <li>3,2 move to 5,6</li>
+                        <li>3,4 shoot 3,5</li>
+                    </ul>
+                </li>
+                <li id="infoTab">
+                <p>5 health</p>
+                </li>
+                <li id="menuTab">
+                    Forfeit
+                </li>
+            </ul>
+        </div>
+    </div> <! -- container -->
+    <div id="log">
+    </div> <!-- log -->
+
+    <img id="themesprite" src="{{STATIC_URL}}img/LandUnits.gif" />
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
+    <script>window.jQuery || document.write("<script src='{{STATIC_URL}}js/jquery-1.5.1.min.js'>\x3C/script>")</script>
+        <script src="{{STATIC_URL}}js/app.js"></script>
+        <script src="{{STATIC_URL}}js/turnflict.js"></script>
+</body>
+</html>
