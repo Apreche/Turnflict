@@ -4,6 +4,7 @@
         <div id="canvascontainer" class="eleven columns">
             <canvas id="gamefield"></canvas>
             <a class="button" id="reset" href="#">Reset Turn</a>
+            <a class="button" id="endturn" href="#">End Turn</a>
         </div>
         <div class="five columns">
             <ul class="tabs">
@@ -28,11 +29,12 @@
     </div> <! -- container -->
     <div id="log">
     </div> <!-- log -->
-    <div id="couchurl">/game/state/{{game.id}}</div>
+    <div id="couchurl" class="hidden">/game/state/{{game.id}}</div>
     <img id="themesprite" src="{{STATIC_URL}}img/LandUnits.gif" />
 {% endblock content %}
 
 {% block js %}
     {{ block.super }}
+    <script src="{{STATIC_URL}}js/json2.js"></script>
     <script src="{{STATIC_URL}}js/turnflict.js"></script>
 {% endblock js %}
