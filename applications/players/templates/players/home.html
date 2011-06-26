@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-{% for game in games %}
+{% if games %}
 <h2>Your Games</h2>
 <ul>
+    {% for game in games %}
     <li><a href="{{ game.get_absolute_url }}">{{ game }}</a></li>
+    {% endfor %}
 </ul>
-{% endfor %}
+{% endif %}
 {% endblock %}

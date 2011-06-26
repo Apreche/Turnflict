@@ -2,7 +2,7 @@ import couchdb
 
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from django.utils import simplejson as json
@@ -11,7 +11,22 @@ from games.models import Game
 
 @login_required
 @csrf_protect
-def process_game_turn(request, game_id):
+def create(request):
+    if request.method == "POST":
+        game = Game()
+        game.name = request.POST['name']
+        game.player_one = request.user.get_profile()
+        couch = couchdb.Server(settings.COUCHDB_HOST)
+        db = couch[settings.COUCHDB_NAME]
+        game.couch_id = db.create({'game': db['game_start']['game']})
+        game.save()
+        return HttpResponseRedirect(game.get_absolute_url())
+    else:
+        raise Http404
+
+@login_required
+@csrf_protect
+def process_turn(request, game_id):
     game = get_object_or_404(Game, id=game_id)
     if game.current_player.user != request.user:
         raise Http404
@@ -37,7 +52,7 @@ def process_game_turn(request, game_id):
 @csrf_protect
 def play(request, game_id):
     if request.is_ajax():
-        return process_game_turn(request, game_id)
+        return process_turn(request, game_id)
     template_name = 'games/play.html'
     context = {}
     game = get_object_or_404(Game, id=game_id)

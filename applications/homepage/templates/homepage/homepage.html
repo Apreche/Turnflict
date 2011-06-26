@@ -12,12 +12,19 @@
         <li><a href="/accounts/register/">Regsiter</a></li>
     {% endif %}
 </ul>
-{% if user.is_authenticated and joinable_games %}
+{% if user.is_authenticated %}
+    <form action="{% url create-game %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="name" />
+        <input type="submit" value="Create New Game">
+    </form>
+    {% if joinable_games %}
     <h3>Joinable Games</h3>
     <ul>
     {% for game in joinable_games %}
         <li><a href="{{game.get_absolute_url}}">{{game}}</a></li>
     {% endfor %}
     </ul>
+    {% endif %}
 {% endif %}
 {% endblock content %}
