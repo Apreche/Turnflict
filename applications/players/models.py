@@ -1,4 +1,5 @@
 from django.db import models
+from registration.signals import user_registered
 
 class Player(models.Model):
     user = models.OneToOneField('auth.User')
@@ -8,3 +9,10 @@ class Player(models.Model):
 
     def __unicode__(self):
         return self.user.username
+
+def create_player(sender, user, request, **kwargs):
+    player = Player()
+    player.user = user
+    player.save()
+
+user_registered.connect(create_player)

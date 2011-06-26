@@ -1,16 +1,20 @@
 import couchdb
 
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from django.utils import simplejson as json
 
 from games.models import Game
 
+@login_required
 @csrf_protect
 def process_game_turn(request, game_id):
     game = get_object_or_404(Game, id=game_id)
+    if game.current_player.user != request.user:
+        raise Http404
     couch = couchdb.Server(settings.COUCHDB_HOST)
     db = couch[settings.COUCHDB_NAME]
     doc = db[game.couch_id]
@@ -23,6 +27,11 @@ def process_game_turn(request, game_id):
                     unit['x'] = command['dx']
                     unit['y'] = command['dy']
     db.save(doc)
+    if game.current_player == game.player_one:
+        game.current_player = game.player_two
+    else:
+        game.current_player = game.player_one
+    game.save()
     return HttpResponse(json.dumps(doc))
 
 @csrf_protect

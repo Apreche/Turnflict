@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     # url(r'^Django_Project_Template/', include('Django_Project_Template.foo.urls')),
 
     url('^game/', include('games.urls')),
+    url('^players/', include('players.urls')),
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

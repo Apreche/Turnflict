@@ -2,9 +2,22 @@
 
 
 {% block content %}
-<h2>Welcome. Login to play.</h2>
+<h2>Prepare for Battle</h2>
 <ul>
-    <li><a href="/accounts/login/">Login</a></li>
-    <li><a href="/accounts/register/">Regsiter</a></li>
+    {% if user.is_authenticated %}
+        <li><a href="{% url player-home %}">Dashboard</a></li>
+        <li><a href="/accounts/logout/">Logout</a></li>
+    {% else %}
+        <li><a href="/accounts/login/">Login</a></li>
+        <li><a href="/accounts/register/">Regsiter</a></li>
+    {% endif %}
 </ul>
+{% if user.is_authenticated and joinable_games %}
+    <h3>Joinable Games</h3>
+    <ul>
+    {% for game in joinable_games %}
+        <li><a href="{{game.get_absolute_url}}">{{game}}</a></li>
+    {% endfor %}
+    </ul>
+{% endif %}
 {% endblock content %}

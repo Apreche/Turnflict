@@ -154,7 +154,10 @@ function process_click(coordinates)
     var new_active_unit;
     $.each(game.units, function(index, unit) {
         if( (unit.x == coordinates.x) && (unit.y == coordinates.y )){
-            new_active_unit = unit;
+            var team = $("#team").html();
+            if (unit.team.toString() == team) {
+                new_active_unit = unit;
+            }
         }
     });
     if (new_active_unit) {
@@ -211,9 +214,11 @@ $(document).ready(function()
                 });
 
                 canvas.addEventListener("click", function(e){
-                    coordinates = get_coordinates_from_click(e, canvas, zoom);
-                    process_click(coordinates, game, canvas);
-                    draw(canvas, game, theme, zoom, aspect_ratio);
+                    if ($("#allowmove").html() == "true") {
+                        coordinates = get_coordinates_from_click(e, canvas, zoom);
+                        process_click(coordinates, game, canvas);
+                        draw(canvas, game, theme, zoom, aspect_ratio);
+                    }
                 },
                 false);
 
@@ -229,6 +234,7 @@ $(document).ready(function()
                         original_game = $.extend(true, {}, data.game);
                         game = $.extend(true, {}, data.game);
                         draw(canvas, game, theme, zoom, aspect_ratio);
+                        $("#allowmove").html("false");
                     }, "json");
                 });
 

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+{% for game in games %}
+<h2>Your Games</h2>
+<ul>
+    <li><a href="{{ game.get_absolute_url }}">{{ game }}</a></li>
+</ul>
+{% endfor %}
+{% endblock %}

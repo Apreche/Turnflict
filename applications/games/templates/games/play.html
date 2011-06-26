@@ -3,8 +3,10 @@
     <div class="container">
         <div id="canvascontainer" class="eleven columns">
             <canvas id="gamefield"></canvas>
+            {% if user == game.current_player.user %}
             <a class="button" id="reset" href="#">Reset Turn</a>
             <a class="button" id="endturn" href="#">End Turn</a>
+            {% endif %}
         </div>
         <div class="five columns">
             <ul class="tabs">
@@ -29,6 +31,14 @@
     </div> <! -- container -->
     <div id="log">
     </div> <!-- log -->
+    {% if user == game.current_player.user %}
+    <div id="allowmove" class="hidden">true</div>
+    {% endif %}
+    {% if user == game.player_one.user %}
+    <div id="team" class="hidden">0</div>
+    {% else %}
+    <div id="team" class="hidden">1</div>
+    {% endif %}
     <div id="couchurl" class="hidden">/game/state/{{game.id}}</div>
     <img id="themesprite" src="{{STATIC_URL}}img/LandUnits.gif" />
 {% endblock content %}
