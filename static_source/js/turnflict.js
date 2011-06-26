@@ -235,6 +235,8 @@ $(document).ready(function()
                         game = $.extend(true, {}, data.game);
                         draw(canvas, game, theme, zoom, aspect_ratio);
                         $("#allowmove").html("false");
+                        $("#reset").hide();
+                        $("#endturn").hide();
                     }, "json");
                 });
 
