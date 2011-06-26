@@ -22,7 +22,8 @@
     <h3>Joinable Games</h3>
     <ul>
     {% for game in joinable_games %}
-        <li><a href="{{game.get_absolute_url}}">{{game}}</a></li>
+    <li>
+    <a class="button" href="{% url game-join game.id %}">Join</a> <a href="{{game.get_absolute_url}}">{{game}}</a></li>
     {% endfor %}
     </ul>
     {% endif %}

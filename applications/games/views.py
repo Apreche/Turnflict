@@ -10,6 +10,18 @@ from django.utils import simplejson as json
 from games.models import Game
 
 @login_required
+def join(request, game_id):
+    game = get_object_or_404(Game, id=game_id)
+    new_user = request.user.get_profile()
+    if game.player_two or (game.player_one == new_user):
+        raise Http404
+    game.player_two = new_user
+    game.current_player = game.player_one
+    game.save()
+    return HttpResponseRedirect(game.get_absolute_url())
+
+
+@login_required
 @csrf_protect
 def create(request):
     if request.method == "POST":
