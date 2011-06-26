@@ -1,0 +1,23 @@
+import sys, site, os
+
+ALLDIRS = [
+    '/home/ubuntu/src/turnflict/lib/python2.7/site-packages/',
+    '/home/ubuntu/src/turnflict/Turnflict/',
+    '/home/ubuntu/src/turnflict/',
+]
+
+prev_sys_path = list(sys.path)
+for directory in ALLDIRS:
+    site.addsitedir(directory)
+new_sys_path = []
+for item in list(sys.path):
+    if item not in prev_sys_path:
+        new_sys_path.append(item)
+        sys.path.remove(item)
+sys.path[:0] = new_sys_path
+
+sys.stdout = sys.stderr
+
+import django.core.handlers.wsgi
+os.environ["DJANGO_SETTINGS_MODULE"] = 'Turnflict.settings'
+application = django.core.handlers.wsgi.WSGIHandler()

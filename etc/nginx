@@ -1,0 +1,26 @@
+# Apache server
+upstream django {
+    server         localhost:8000;
+}
+
+# Serve static files and redirect any other request to Apache
+server {
+    listen       80;
+    server_name  turnflict.frontrowcrew.com;
+    root        /var/www/turnflict.frontrowcrew.com/;
+    access_log  /var/log/nginx/domain.com.access.log;
+    error_log  /var/log/nginx/domain.com.error.log;
+
+# Check if a file exists at /var/www/domain/ for the incoming request.
+# If it doesn't proxy to Apache/Django.
+    try_files $uri @django;
+
+# Setup named location for Django requests and handle proxy details
+    location @django {
+        proxy_pass         http://django;
+        proxy_redirect     off;
+        proxy_set_header   Host             $host;
+        proxy_set_header   X-Real-IP        $remote_addr;
+        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+    }
+}

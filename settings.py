@@ -104,8 +104,6 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'johnny.middleware.LocalStoreClearMiddleware',
-    'johnny.middleware.QueryCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -138,7 +136,7 @@ EMAIL_HOST_USER = 'server@frontrowcrew.com'
 #EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 EMAIL_SUBJECT_PREFIX = '[Turnflict] '
-LOGIN_REDIRECT_URL = 'http://localhost:8000/players/home'
+LOGIN_REDIRECT_URL = '/players/home'
 
 try:
     from local_middleware import EXTRA_MIDDLEWARE
@@ -172,9 +170,6 @@ INSTALLED_APPS = (
     'registration',
     #'socialregistration',
     'django_extensions',
-    'memcache_status',
-    'johnny',
-    
     'homepage',
     'players',
     'games',

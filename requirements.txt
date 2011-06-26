@@ -7,5 +7,4 @@ South==0.7.3
 distribute==0.6.19
 django-debug-toolbar==0.8.5
 django-extensions==0.6
-django-memcache-status==1.0.1
 docutils==0.7
