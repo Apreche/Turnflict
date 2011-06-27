@@ -2,6 +2,6 @@ Thank you for registering for Turnflict. You have {{expiration_days}} days to ac
 
 Your activation key is {{activation_key}}.
 
-<a href="http://127.0.0.1:8000/accounts/activate/{{activation_key}}/">Click here to activate</a>, or copy and paste this into your browser's location bar:
+<a href="http://turnflict.frontrowcrew.com/accounts/activate/{{activation_key}}/">Click here to activate</a>, or copy and paste this into your browser's location bar:
 
-http://127.0.0.1:8000/accounts/activate/{{activation_key}}/
+http://turnflict.frontrowcrew.com/accounts/activate/{{activation_key}}/
