@@ -71,6 +71,8 @@ function resize_canvas(canvas, zoom, aspect_ratio)
 function draw_grid(canvas, zoom)
 {
     var context = canvas.getContext("2d");
+
+    context.beginPath();
     for (var x = 0.5; x < canvas.width; x+= zoom){
         context.moveTo(x,0);
         context.lineTo(x,canvas.height);
@@ -81,6 +83,22 @@ function draw_grid(canvas, zoom)
     }
     context.strokeStyle = "#ccc";
     context.stroke();
+}
+
+function highlight(gx, gy)
+{
+    var context = canvas.getContext("2d");
+    var x = gx * zoom + 0.5;
+    var y = gy * zoom + 0.5;
+
+    context.beginPath()
+    context.moveTo(x, y);
+    context.lineTo(x, y+zoom);
+    context.lineTo(x+zoom, y+zoom);
+    context.lineTo(x+zoom, y);
+    context.lineTo(x, y);
+    context.strokeStyle = "#f00";
+    context.stroke()
 }
 
 function draw_unit(canvas, theme, unit, zoom)
@@ -110,6 +128,9 @@ function draw(canvas, game, theme, zoom, aspect_ratio)
     resize_canvas(canvas, zoom, aspect_ratio);
     draw_grid(canvas, zoom, aspect_ratio);
     draw_units(canvas, game, theme, zoom);
+    if (active_unit) {
+        highlight(active_unit.x, active_unit.y);
+    }
 }
 
 function get_offset(obj)
@@ -165,7 +186,7 @@ function process_click(coordinates)
     }else if (active_unit){
         var required_mp = distance(active_unit.x, active_unit.y, coordinates.x, coordinates.y);
         var available_mp = active_unit.movement;
-        if( available_mp > required_mp ){
+        if( available_mp >= required_mp ){
             var no_blocking_units = true;
             $.each(game.units, function(index, unit) {
                 if (unit.id == active_unit.id){
@@ -224,6 +245,7 @@ $(document).ready(function()
 
                 $("#reset").click(function(){
                     commands = [];
+                    active_unit = undefined;
                     game = $.extend(true, {}, original_game);
                     draw(canvas, game, theme, zoom, aspect_ratio);
                 });
